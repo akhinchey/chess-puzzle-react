@@ -13,7 +13,7 @@ const sqaureData = [
     { col: 'E', row: '8', lDiag: '12', rDag: '5', active: false },
     { col: 'F', row: '8', lDiag: '13', rDag: '6', active: false },
     { col: 'G', row: '8', lDiag: '14', rDag: '7', active: false },
-    { col: 'H', row: '8', lDiag: '15', rDag: '8', active: false }
+    { col: 'H', row: '8', lDiag: '15', rDag: '8', active: false },
   ],
   [
     { col: 'A', row: '7', lDiag: '7', rDag: '2', active: false },
@@ -23,7 +23,7 @@ const sqaureData = [
     { col: 'E', row: '7', lDiag: '11', rDag: '6', active: false },
     { col: 'F', row: '7', lDiag: '12', rDag: '7', active: false },
     { col: 'G', row: '7', lDiag: '13', rDag: '8', active: false },
-    { col: 'H', row: '7', lDiag: '14', rDag: '9', active: false }
+    { col: 'H', row: '7', lDiag: '14', rDag: '9', active: false },
   ],
   [
     { col: 'A', row: '6', lDiag: '6', rDag: '3', active: false },
@@ -33,7 +33,7 @@ const sqaureData = [
     { col: 'E', row: '6', lDiag: '10', rDag: '7', active: false },
     { col: 'F', row: '6', lDiag: '11', rDag: '8', active: false },
     { col: 'G', row: '6', lDiag: '12', rDag: '9', active: false },
-    { col: 'H', row: '6', lDiag: '13', rDag: '10', active: false }
+    { col: 'H', row: '6', lDiag: '13', rDag: '10', active: false },
   ],
   [
     { col: 'A', row: '5', lDiag: '5', rDag: '4', active: false },
@@ -73,7 +73,7 @@ const sqaureData = [
     { col: 'E', row: '2', lDiag: '6', rDag: '11', active: false },
     { col: 'F', row: '2', lDiag: '7', rDag: '12', active: false },
     { col: 'G', row: '2', lDiag: '8', rDag: '13', active: false },
-    { col: 'H', row: '2', lDiag: '9', rDag: '14', active: false }
+    { col: 'H', row: '2', lDiag: '9', rDag: '14', active: false },
   ],
   [
     { col: 'A', row: '1', lDiag: '1', rDag: '8', active: false },
@@ -117,21 +117,19 @@ const ChessSquare = styled.li`
   }
 `;
 
-const buildRow = (rowData, divide) => {
-  return rowData.map((square, i) => (
+const buildRow = (rowData, divide) =>
+  rowData.map((square, i) => (
     <React.Fragment>
       <ChessSquare square={square} rowCount={divide} key={i} />
     </React.Fragment>
   ));
-};
 
-const buildSqaureRows = () => {
-  return sqaureData.map((rowData, i) => {
+const buildSqaureRows = () =>
+  sqaureData.map((rowData, i) => {
     const divide = i % 2 === 0 ? 'even' : 'odd';
 
     return <React.Fragment>{buildRow(rowData, divide)}</React.Fragment>;
   });
-};
 
 export default function App() {
   return (
