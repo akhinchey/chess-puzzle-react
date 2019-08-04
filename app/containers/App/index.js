@@ -101,6 +101,12 @@ const Ul = styled.ul`
   padding: 0;
   overflow: auto;
   width: 100%;
+
+  li {
+    :nth-child(${props => (props.rowOdd ? 'even' : 'odd')}) {
+      background: #aaa;
+    }
+  }
 `;
 
 const ChessSquare = styled.li`
@@ -110,25 +116,31 @@ const ChessSquare = styled.li`
   height: 0;
   padding-bottom: 12.5%;
   background-color: #e3e3e3;
+  background: ${props => (props.square.active ? '/images/queen.png' : null)}
   margin: 0;
 
-  :nth-child(${props => props.rowCount}) {
-    background: #aaa;
-  }
+
 `;
 
-const buildRow = (rowData, divide) =>
-  rowData.map((square, i) => (
+const ChessRow = props => {
+  const { rowData } = props;
+
+  return rowData.map((square, i) => (
     <React.Fragment>
-      <ChessSquare square={square} rowCount={divide} key={i} />
+      <ChessSquare square={square} key={i} />
     </React.Fragment>
   ));
+};
 
 const buildSqaureRows = () =>
   sqaureData.map((rowData, i) => {
-    const divide = i % 2 === 0 ? 'even' : 'odd';
+    const rowOdd = i % 2 === 0;
 
-    return <React.Fragment>{buildRow(rowData, divide)}</React.Fragment>;
+    return (
+      <Ul rowOdd={rowOdd}>
+        <ChessRow rowData={rowData} rowOdd={rowOdd} />
+      </Ul>
+    );
   });
 
 export default function App() {
@@ -137,9 +149,7 @@ export default function App() {
       <h1 className="title"> Chess Queen Challenge</h1>
 
       <main role="main" className="container">
-        <section>
-          <Ul className="cells">{buildSqaureRows()}</Ul>
-        </section>
+        <section>{buildSqaureRows()}</section>
       </main>
     </AppWrapper>
   );
