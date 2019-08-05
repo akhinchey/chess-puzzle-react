@@ -1,6 +1,7 @@
 import React from 'react';
 // import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
+import queenImg from '../../images/queen.png';
 // import { Switch, Route } from 'react-router-dom';
 // import GlobalStyle from '../../global-styles';
 
@@ -94,6 +95,7 @@ const AppWrapper = styled.div`
   min-height: 100%;
   padding: 0 16px;
   flex-direction: column;
+  padding-bottom: 30px;
 `;
 
 const Ul = styled.ul`
@@ -116,19 +118,21 @@ const ChessSquare = styled.li`
   height: 0;
   padding-bottom: 12.5%;
   background-color: #e3e3e3;
-  background: ${props => (props.square.active ? '/images/queen.png' : null)}
   margin: 0;
+`;
 
-
+const Image = styled.img`
+  text-align: center;
 `;
 
 const ChessRow = props => {
   const { rowData } = props;
 
   return rowData.map((square, i) => (
-    <React.Fragment>
-      <ChessSquare square={square} key={i} />
-    </React.Fragment>
+    /* eslint-disable-next-line */
+    <ChessSquare key={i}>
+      {square.active && <Image alt="queen" src={queenImg} />}
+    </ChessSquare>
   ));
 };
 
