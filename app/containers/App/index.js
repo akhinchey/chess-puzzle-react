@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import queenImg from '../../images/queen.png';
@@ -126,34 +126,50 @@ const Image = styled.img`
 `;
 
 const ChessRow = props => {
-  const { rowData } = props;
+  const { rowData, rowIndex, getSquare } = props;
 
-  return rowData.map((square, i) => (
+  return rowData.map((square, squareIndex) => (
     /* eslint-disable-next-line */
-    <ChessSquare key={i}>
+    <ChessSquare key={squareIndex} onClick={() => getSquare(rowIndex, squareIndex)}>
       {square.active && <Image alt="queen" src={queenImg} />}
     </ChessSquare>
   ));
 };
 
-const buildSqaureRows = () =>
-  sqaureData.map((rowData, i) => {
+const ChessBoard = ({ board, getSquare }) =>
+  board.map((rowData, i) => {
     const rowOdd = i % 2 === 0;
 
     return (
       <Ul rowOdd={rowOdd}>
-        <ChessRow rowData={rowData} rowOdd={rowOdd} />
+        <ChessRow
+          rowData={rowData}
+          rowOdd={rowOdd}
+          getSquare={getSquare}
+          rowIndex={i}
+        />
       </Ul>
     );
   });
 
 export default function App() {
+  const [board, setBoard] = useState(sqaureData);
+
+  const getSquare = (rowIndex, squareIndex) => {
+    const newBoard = board.slice();
+    newBoard[rowIndex][squareIndex].active = !newBoard[rowIndex][squareIndex]
+      .active;
+    setBoard(newBoard);
+  };
+
   return (
     <AppWrapper>
       <h1 className="title"> Chess Queen Challenge</h1>
 
       <main role="main" className="container">
-        <section>{buildSqaureRows()}</section>
+        <section>
+          <ChessBoard board={board} getSquare={getSquare} />
+        </section>
       </main>
     </AppWrapper>
   );
