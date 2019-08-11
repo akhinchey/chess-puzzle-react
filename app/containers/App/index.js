@@ -91,13 +91,8 @@ const darkStyle = css`
   background: #aaa;
 `;
 
-const colorSelect = index =>
-  index % 2 === 0 &&
-  css`
-    ${darkStyle};
-  `;
-const colorSelect2 = index =>
-  index % 2 !== 0 &&
+const colorSelect = darkSquare =>
+  darkSquare &&
   css`
     ${darkStyle};
   `;
@@ -121,11 +116,14 @@ const ChessSquare = styled.div`
   background-color: #e3e3e3;
   margin: 0;
   ${props =>
-    oddRow(props.index) ? colorSelect(props.index) : colorSelect2(props.index)}
+    oddRow(props.index)
+      ? colorSelect(props.index % 2 === 0)
+      : colorSelect(props.index % 2 !== 0)}
 `;
 
 const Image = styled.img`
   text-align: center;
+  width: 80%;
 `;
 
 const ChessBoard = ({ board, getSquare }) =>
