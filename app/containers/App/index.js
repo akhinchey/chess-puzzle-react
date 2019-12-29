@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 // import styled from '@emotion/styled';
-import { css } from '@emotion/core';
+// import { css } from '@emotion/core';
 import queenImg from '../../images/queen.png';
 import boardData from './boardData';
 // import { Switch, Route } from 'react-router-dom';
@@ -13,16 +13,6 @@ const oddRow = index =>
   (index >= 16 && index <= 23) ||
   (index >= 32 && index <= 39) ||
   (index >= 48 && index <= 55);
-
-const darkStyle = css`
-  background: #aaa;
-`;
-
-const colorSelect = darkSquare =>
-  darkSquare &&
-  css`
-    ${darkStyle};
-  `;
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -40,12 +30,12 @@ const ChessSquare = styled.div`
   float: left;
   height: 0;
   padding-bottom: 12.5%;
-  background-color: #e3e3e3;
+  background: #e3e3e3;
   margin: 0;
   ${props =>
     oddRow(props.index)
-      ? colorSelect(props.index % 2 === 0)
-      : colorSelect(props.index % 2 !== 0)}
+      ? props.index % 2 === 0 && `background: #aaa;`
+      : props.index % 2 !== 0 && `background: #aaa;`}
 `;
 
 const Image = styled.img`
@@ -66,6 +56,10 @@ const ChessBoard = ({ board, getSquare }) =>
 
 export default function App() {
   const [board, setBoard] = useState(boardData);
+
+  useEffect(() => {
+    alert('square has been clicked');
+  }, [board]);
 
   const getSquare = squareIndex => {
     const newBoard = board.slice();
