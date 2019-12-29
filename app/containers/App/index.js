@@ -57,13 +57,24 @@ const ChessBoard = ({ board, getSquare }) =>
 export default function App() {
   const [board, setBoard] = useState(boardData);
 
-  useEffect(() => {
-    alert('square has been clicked');
-  }, [board]);
+  // useEffect(() => {
+  //   alert('square has been clicked');
+  // }, [board]);
 
   const getSquare = squareIndex => {
     const newBoard = board.slice();
-    newBoard[squareIndex].active = !newBoard[squareIndex].active;
+    const newSquare = newBoard[squareIndex];
+    const { col, row, lDiag, rDiag } = newSquare;
+    newBoard.forEach(square => {
+      if (
+        square.row === row ||
+        square.col === col ||
+        square.lDiag === lDiag ||
+        square.rDiag === rDiag
+      )
+        square.active = false;
+    });
+    newSquare.active = !newSquare.active;
     setBoard(newBoard);
   };
 
